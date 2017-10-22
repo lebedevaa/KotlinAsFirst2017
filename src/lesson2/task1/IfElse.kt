@@ -73,15 +73,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
-    if ((kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2 || kingY == rookY2))
-        return 3
-    else if (kingX == rookX1 || kingY == rookY1)
-        return 1
-    else if (kingX == rookX2 || kingY == rookY2)
-        return 2
-    return 0
-
+                       rookX2: Int, rookY2: Int): Int = when {
+    ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
+    (kingX == rookX1) || (kingY == rookY1) -> 1
+    (kingX == rookX2) || (kingY == rookY2) -> 2
+    else -> 0
 }
 
 /**
@@ -96,16 +92,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
-    val delX = (kingX - bishopX)
-    val delY = (kingY - bishopY)
-    if ((Math.abs(delX) == Math.abs(delY)) && (kingX == rookX || kingY == rookY))
-        return 3
-    if (Math.abs(delX) == Math.abs(delY))
-        return 2
-    if (kingX == rookX || kingY == rookY)
-        return 1
-    return 0
+                          bishopX: Int, bishopY: Int): Int = when {
+    ((kingX == rookX) || (kingY == rookY)) &&
+            ((kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY)) -> 3
+    (kingX == rookX) || (kingY == rookY) -> 1
+    (kingX - kingY == bishopX - bishopY) || (kingX + kingY == bishopX + bishopY) -> 2
+    else -> 0
 
 }
 
@@ -117,8 +109,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val sqrA = sqr(a)
+fun triangleKind(a: Double, b: Double, c: Double): Int{val sqrA = sqr(a)
     val sqrB = sqr(b)
     val sqrC = sqr(c)
 
@@ -143,10 +134,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-        ((a >= c) && (b <= d)) -> b - a
-        ((c >= a) && (d <= b)) -> d - c
-        ((b >= c) && (b <= d)) -> b - c
-        ((d >= a) && (d <= b)) -> d - a
-        else -> -1
+    ((a >= c) && (b <= d)) -> b - a
+    ((c >= a) && (d <= b)) -> d - c
+    ((b >= c) && (b <= d)) -> b - c
+    ((d >= a) && (d <= b)) -> d - a
+    else -> -1
 
-    }
+}

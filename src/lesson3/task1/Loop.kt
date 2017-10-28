@@ -2,8 +2,8 @@
 
 package lesson3.task1
 
-
-
+import lesson1.task1.sqr
+import java.lang.Math
 
 /**
  * Пример
@@ -69,7 +69,7 @@ fun digitNumber(n: Int): Int {
     var result1 = 1
     var num = Math.abs(n)
 
-    while (num >= 10){
+    while (num >= 10) {
         num /= 10
         result1++
     }
@@ -95,8 +95,16 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int =
-        TODO()
+fun lcm(m: Int, n: Int): Int {
+    var number1 = n
+    var number2 = m
+    while (number1 != 0 && number2 != 0) {
+        if (number1 >= number2) number1 %= number2
+        else number2 %= number1
+    }
+    val mcd = number1 + number2
+    return m * n / mcd
+}
 
 
 /**
@@ -106,11 +114,11 @@ fun lcm(m: Int, n: Int): Int =
  */
 fun minDivisor(n: Int): Int {
     for (k in 2..Math.sqrt(n.toDouble()).toInt()) {
-        if (n % (n / k) == 0) {
-            return (n / k)
+        if (n % k == 0) {
+            return k
         }
     }
-    return 1
+    return n
 }
 
 /**
@@ -118,7 +126,12 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in n / 2 downTo 2) {
+        if (n % i == 0) return i
+    }
+    return 1
+}
 
 /**
  * Простая
@@ -127,7 +140,7 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean = (lcm(m, n) == m * n)
 
 /**
  * Простая
@@ -136,7 +149,15 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    for (k in m..n) {
+        if ((Math.sqrt(k.toDouble()) % 1.0) == 0.0) {
+            return true
+        }
+    }
+    return false
+
+}
 
 /**
  * Средняя
@@ -162,7 +183,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Поменять порядок цифр заданного числа n на обратный: 13478 -> 87431.
  * Не использовать строки при решении задачи.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var Number = n
+    var Result = 0
+    while (Number > 0) {
+        Result = Result * 10 + (Number % 10)
+        Number /= 10
+    }
+    return Result
+}
 
 /**
  * Средняя
@@ -179,7 +208,15 @@ fun isPalindrome(n: Int): Boolean = TODO()
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var number = n
+    val numeric = n % 10
+    do {
+        if (number % 10 != numeric) return true
+        number /= 10
+    } while (number > 0)
+    return false
+}
 
 /**
  * Сложная
@@ -188,7 +225,21 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var currentIntNumber = 0
+    var count = 0
+    var counter = 1.0
+    while (count < n) {
+        currentIntNumber = sqr(counter).toInt()
+        count += digitNumber(sqr(counter).toInt())
+        counter++
+    }
+    while (count != n) {
+        count--
+        currentIntNumber /= 10
+    }
+    return currentIntNumber % 10
+}
 
 /**
  * Сложная

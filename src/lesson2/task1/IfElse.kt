@@ -109,20 +109,16 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int{val sqrA = sqr(a)
-    val sqrB = sqr(b)
-    val sqrC = sqr(c)
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return when {
+        (a + b < c || a + c < b || b + c < a) -> -1
 
-    if ((a > b + c) || (b > a + c) || (c > b + a)) {
-        return -1
+        (sqr(a) + sqr(b) == sqr(c) || sqr(b) + sqr(c) == sqr(a) || sqr(a) + sqr(c) == sqr(b)) -> 1
+
+        (sqr(a) + sqr(b) < sqr(c) || sqr(b) + sqr(c) < sqr(a) || sqr(a) + sqr(c) < sqr(b)) -> 2
+
+        else -> 0
     }
-    if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
-        return 1
-    }
-    if (((sqrC < sqrB + sqrA) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))) {
-        return 2
-    }
-    return 0
 }
 
 /**

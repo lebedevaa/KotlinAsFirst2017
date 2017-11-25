@@ -3,8 +3,10 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import lesson3.task1.isPrime
 import java.lang.Math.pow
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -109,16 +111,9 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    val abs: Double
-    var sqrt = 0.0
-    for (element in v) {
-        sqrt += Math.pow(element, 2.0)
-    }
-    abs = Math.sqrt(sqrt)
-    return abs
-}
-
+fun abs(v: List<Double>): Double = sqrt(v.fold(0.0) { previousResult, element ->
+    sqr(element) + previousResult
+})
 /**
  * Простая
  *
@@ -134,7 +129,13 @@ fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0 else list.sum() /
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val average = mean(list)
+    for ((index, element) in list.withIndex()) {
+        list[index] = element - average
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -144,11 +145,11 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double {
-    var C = 0.0
+    var с = 0.0
     for (i in 0 until a.size) {
-        C += (a[i] * b[i])
+        с += (a[i] * b[i])
     }
-    return C
+    return с
 }
 
 /**
@@ -192,18 +193,15 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var number = n
+    var div = 2
+    var numN = n
     val result = mutableListOf<Int>()
-    if (isPrime(n)) return listOf(n)
-    for (i in 2..Math.ceil(n.toDouble() / 2).toInt()) {
-        if (isPrime(i)) {
-            while (number % i == 0) {
-                result.add(i)
-                number /= i
-            }
-            if (result.fold(1.0) { prev, elem -> elem * prev } ==
-                    n.toDouble()) return result
+    while (numN > 1) {
+        while (numN % div == 0) {
+            result += div
+            numN /= div
         }
+        div++
     }
     return result
 }

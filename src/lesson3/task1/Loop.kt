@@ -26,7 +26,7 @@ fun factorial(n: Int): Double {
  */
 fun isPrime(n: Int): Boolean {
     if (n < 2) return false
-    for (m in 2..Math.sqrt(n.toDouble()).toInt()) {
+    for (m in 2..sqrt(n.toDouble()).toInt()) {
         if (n % m == 0) return false
     }
     return true
@@ -84,12 +84,19 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    if (n > 2) {
-        return (fib((n - 1)) + fib((n - 2)))
+    var f1 = 1
+    var f2 = 1
+    var fn = 0
+    if ((n == 1) || (n == 2)) return 1
+    else {
+        for (i in 3..n) {
+            fn = f1 + f2
+            f1 = f2
+            f2 = fn
+        }
+        return fn
     }
-    return 1
 }
-
 /**
  * Простая
  *

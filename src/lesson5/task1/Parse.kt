@@ -77,6 +77,7 @@ fun dateStrToDigit(str: String): String = TODO()
  */
 fun dateDigitToStr(digital: String): String = TODO()
 
+
 /**
  * Средняя
  *
@@ -89,7 +90,18 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if (phone == "") return ""
+    var res = ""
+    val symb = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '(', ')', ' ')
+    if (phone[0] == '+') res += "+"
+    for (i in 0 until phone.length) {
+        if (phone[i] !in symb) return ""
+        else if (phone[i] in '0'..'9') res += phone[i]
+    }
+    return res
+}
+
 
 /**
  * Средняя
@@ -124,7 +136,22 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var max = -1
+    val parts = jumps.split(" ")
+    for (i in 0 until parts.size - 1) {
+        try {
+            if ((parts[i].toInt() > max) &&
+                    (parts[i + 1].indexOf("+") != -1)) max = parts[i].toInt()
+
+        } catch (e: NumberFormatException) {
+            for (el in parts[i]) {
+                if (el !in listOf('+', '-', '%')) return -1
+            }
+        }
+    }
+    return max
+}
 
 /**
  * Сложная
@@ -161,7 +188,17 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    var counter = -1
+    for (i in 0 until parts.size - 1) {
+        //Прибавляем 1, потому что после каждого слова есть ще пробел пробел
+        counter += parts[i].length + 1
+        if (parts[i].toLowerCase() == parts[i + 1].toLowerCase())
+            return counter - parts[i].length
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -174,8 +211,26 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
-
+fun mostExpensive(description: String): String {
+    try {
+        val parts = description.split("; ")
+        val product = mutableListOf<String>()
+        val price = mutableListOf<Double>()
+        for (i in 0 until parts.size) {
+            val parts2 = parts[i].split(" ")
+            product += parts2[0]
+            price += parts2[1].toDouble()
+        }
+        return if (price.min()!! < 0.0) ""
+        else return product[price.indexOf(price.max()!!)]
+    } catch (e: StringIndexOutOfBoundsException) {
+        return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 /**
  * Сложная
  *

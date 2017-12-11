@@ -110,13 +110,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val sqrA = sqr(a)
+    val sqrB = sqr(b)
+    val sqrC = sqr(c)
+
     return when {
         (a + b < c || a + c < b || b + c < a) -> -1
-
-        (sqr(a) + sqr(b) == sqr(c) || sqr(b) + sqr(c) == sqr(a) || sqr(a) + sqr(c) == sqr(b)) -> 1
-
-        (sqr(a) + sqr(b) < sqr(c) || sqr(b) + sqr(c) < sqr(a) || sqr(a) + sqr(c) < sqr(b)) -> 2
-
+        (sqrA + sqrB == sqrC ) ||sqrB + sqrC  == sqrA || sqrA + sqrC  == sqrB -> 1
+        (sqrA + sqrB < sqrC || sqrB + sqrC  < sqrA || sqrA + sqrC < sqrB) -> 2
         else -> 0
     }
 }

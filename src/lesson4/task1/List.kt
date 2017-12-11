@@ -7,6 +7,8 @@ import lesson1.task1.sqr
 import lesson3.task1.isPrime
 import java.lang.Math.pow
 import java.lang.Math.sqrt
+import java.lang.StringBuilder
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -144,7 +146,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double {
+fun times(a: List<Double>, b: List<Double>): Double  {
     var с = 0.0
     for (i in 0 until a.size) {
         с += (a[i] * b[i])
@@ -281,15 +283,15 @@ fun roman(n: Int): String  {
     val arabNum = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     var numN = n
     var i = 12
-    var result = ""
+    val result = StringBuilder()
     while (numN > 0){
         while (numN >= arabNum[i]){
             numN -= arabNum[i]
-            result += rimNum[i]
+            result.append(rimNum[i])
         }
         i--
     }
-    return result
+    return result.toString()
 }
 
 /**

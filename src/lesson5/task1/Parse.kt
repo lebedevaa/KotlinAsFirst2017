@@ -1,6 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import java.lang.StringBuilder
+import javax.management.relation.RelationServiceNotRegisteredException
+
 /**
  * Пример
  *
@@ -92,14 +95,15 @@ fun dateDigitToStr(digital: String): String = TODO()
  */
 fun flattenPhoneNumber(phone: String): String {
     if (phone == "") return ""
-    var res = ""
-    val symb = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '(', ')', ' ')
-    if (phone[0] == '+') res += "+"
+    val res = StringBuilder ()
+    val symb = listOf('+', '-', '(', ')', ' ')
+
+    if (phone == "+") return ""
     for (i in 0 until phone.length) {
-        if (phone[i] !in symb) return ""
-        else if (phone[i] in '0'..'9') res += phone[i]
+        if (phone[i] !in symb && phone[i] !in '0'..'9') return ""
+        else if (phone[i] in '0'..'9') res.append(phone[i])
     }
-    return res
+    return res.toString()
 }
 
 
@@ -114,18 +118,15 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    var max = -1
+    val isJump = jumps.matches(Regex("""[\s\d-%]+"""))
+    if (!isJump) return -1
     val parts = jumps.split(" ", "-", "%")
-    for (elem in parts) {
-        try {
-            if (elem.toInt() > max) max = elem.toInt()
-        } catch (e: NumberFormatException) {
-            if (elem != "") return -1
-        }
+    var max = -1
+    for (part in parts) {
+        if (part.matches(Regex("\\d+"))) max = maxOf(part.toInt(), max)
     }
-    return if (max > -1) max else -1
+    return max
 }
-
 /**
  * Сложная
  *

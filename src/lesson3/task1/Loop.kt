@@ -87,14 +87,14 @@ fun fib(n: Int): Int {
     var f1 = 1
     var f2 = 1
     var fn = 0
-    if ((n == 1) || (n == 2)) return 1
+    return if ((n == 1) || (n == 2)) 1
     else {
         for (i in 3..n) {
             fn = f1 + f2
             f1 = f2
             f2 = fn
         }
-        return fn
+        fn
     }
 }
 /**
@@ -121,7 +121,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (k in 2..Math.sqrt(n.toDouble()).toInt()) {
+    for (k in 2..round(sqrt(n.toDouble())).toInt()) {
         if (n % k == 0) {
             return k
         }
@@ -148,7 +148,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = (lcm(m, n) == m * n)
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
 
 /**
  * Простая
@@ -164,7 +164,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
         }
     }
     return false
-
 }
 
 /**
@@ -203,13 +202,13 @@ fun cos(x: Double, eps: Double): Double {
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var Number = n
-    var Result = 0
-    while (Number > 0) {
-        Result = Result * 10 + (Number % 10)
-        Number /= 10
+    var number = n
+    var result = 0
+    while (number > 0) {
+        result = result * 10 + (number % 10)
+        number /= 10
     }
-    return Result
+    return result
 }
 
 /**

@@ -97,6 +97,7 @@ fun fib(n: Int): Int {
         fn
     }
 }
+
 /**
  * Простая
  *
@@ -174,6 +175,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double = TODO()
+
 /**
  * Средняя
  *
@@ -266,4 +268,17 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var number = 0
+    var c = 0
+
+    while (n > number) {
+        c++
+        number += digitNumber(fib(c))
+    }
+    var fib = fib(c)
+    for (d in n until number) {
+        fib /= 10
+    }
+    return fib % 10
+}

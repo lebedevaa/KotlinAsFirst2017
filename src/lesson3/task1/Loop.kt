@@ -184,17 +184,17 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    var number = x
-    if (abs(number) >= 2 * PI) number %= 2 * PI
-    var result = 1.0
-    var count = 1
-    for (i in 2..Int.MAX_VALUE step 2) {
-        val value = pow(number, i.toDouble()) / factorial(i)
-        if (count % 2 == 0) result += value else result -= value
-        count++
-        if (abs(value) < eps) break
-    }
-    return result
+var number = x
+if (abs(number) >= 2 * PI) number %= 2 * PI
+var result = 1.0
+var count = 1
+for (i in 2..Int.MAX_VALUE step 2) {
+    val value = pow(number, i.toDouble()) / factorial(i)
+    if (count % 2 == 0) result += value else result -= value
+    count++
+    if (abs(value) < eps) break
+}
+return result
 }
 
 /**

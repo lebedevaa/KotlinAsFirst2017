@@ -3,6 +3,7 @@ package lesson5.task1
 
 import java.lang.StringBuilder
 import javax.management.relation.RelationServiceNotRegisteredException
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -69,7 +70,24 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val months = listOf("", "января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val parts = str.split(" ")
+    try {
+        if(parts.size != 3) return ""
+        val day = parts[0].toInt()
+        val month = months.indexOf(parts[1])
+        val year = parts[2].toInt()
+        return if (parts[1] in months)
+            String.format("%02d.%02d.%d", day, month, year)
+        else
+            ""
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -78,7 +96,26 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val parts = digital.split(".")
+    try {
+        if (parts.size != 3) return ""
+        if ("00" in parts) return ""
+        if (parts[1].toInt() !in 1..12) return ""
+        val day = parts[0].toInt()
+        val month = months[parts[1].toInt() - 1]
+        val year = parts[2].toInt()
+        return if (month in months)
+            String.format("%d %s %d", day, month, year)
+        else
+            ""
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 
 /**
@@ -93,18 +130,21 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
+fun flattenPhoneNumber(phone: String): String = TODO()/*{
     if (phone == "") return ""
-    val res = StringBuilder ()
+    val res = StringBuilder()
     val symb = listOf('+', '-', '(', ')', ' ')
 
-    if (phone == "+") return ""
+    if (!phone.matches(Regex("""\+?.+"""))) return ""
     for (i in 0 until phone.length) {
         if (phone[i] !in symb && phone[i] !in '0'..'9') return ""
-        else if (phone[i] in '0'..'9') res.append(phone[i])
+        else if (phone[i] in '0'..'9')
+            if (phone[0] == '+')
+
+                return res.toString()
     }
-    return res.toString()
-}
+}*/
+
 
 
 /**
@@ -139,7 +179,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var max = -1
-    val parts = jumps.split(" ")
+    val parts = jumps.split(" ").filter { it != "" }
     for (i in 0 until parts.size - 1) {
         try {
             if ((parts[i].toInt() > max) &&
@@ -189,14 +229,18 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int {
-    val parts = str.split(" ")
-    var counter = -1
-    for (i in 0 until parts.size - 1) {
-        //Прибавляем 1, потому что после каждого слова есть ще пробел пробел
-        counter += parts[i].length + 1
-        if (parts[i].toLowerCase() == parts[i + 1].toLowerCase())
-            return counter - parts[i].length
+fun firstDuplicateIndex(str: String): Int  {
+    val splitStr = str.toLowerCase().split(" ")
+    var ind = 0
+    if (splitStr.size == 1) {
+        return -1
+    }
+    for (i in 0 until splitStr.size - 1) {
+        if (splitStr[i] == splitStr[i + 1]) {
+            return ind
+        } else {
+            ind += splitStr[i].length + 1
+        }
     }
     return -1
 }
@@ -243,7 +287,21 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    var result = 0
+    if (!Regex("""[IVXLCDM]+""").matches(roman)) return -1
+    else {
+        val romans = mapOf("I" to 1, "V" to 5, "X" to 10, "L" to 50, "C" to 100, "D" to 500,
+                "M" to 1000, "IV" to 4, "IX" to 9, "XL" to 40, "XC" to 90, "CD" to 400, "CM" to 900)
+        for (i in roman.length - 1 downTo 0) {
+            val string = romans[roman[i].toString()]!!
+            if (i == roman.length - 1 ||
+                    romans[roman[i + 1].toString()]!! <= romans[roman[i].toString()]!!) result += string
+            else result -= string
+        }
+    }
+    return result
+}
 
 /**
  * Очень сложная

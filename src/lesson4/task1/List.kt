@@ -4,11 +4,9 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import lesson3.task1.isPrime
 import java.lang.Math.pow
 import java.lang.Math.sqrt
 import java.lang.StringBuilder
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * Пример
@@ -147,11 +145,11 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double  {
-    var с = 0.0
+    var n = 0.0
     for (i in 0 until a.size) {
-        с += (a[i] * b[i])
+        n += (a[i] * b[i])
     }
-    return с
+    return n
 }
 
 /**
@@ -317,4 +315,57 @@ fun roman(n: Int): String  {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String = TODO()/*   {
+    val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот",
+            "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val tens = listOf("десять", "одиннадцать", "двенадцать",
+            "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+            "семнадцать", "восемнадцать", "девятнадцать")
+    val ten = listOf("двадцать", "тридцать", "сорок", "пятьдесят",
+            "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val units = listOf("один", "два", "три", "четыре", "пять", "шесть", "семь",
+            "восемь", "девять")
+    val result = mutableListOf<String>()
+    if (n < 1000) {
+        for (i in 1..9) {
+            if (n / 100 == i) result.add(hundreds[i - 1])
+        }
+        var p = n % 100
+        for (i in 1..9) {
+            if (p in 10..19) {
+                if ((i == 1) && (p == i + 9)) result.add(tens[0])
+                if (p == i + 10) result.add(tens[i])
+            } else {
+                p /= 10
+                for (b in 2..9) {
+                    if (p == b) result.add(ten[b - 2])
+                }
+                p = n % 10
+                if (p == i) result.add(units[i - 1])
+            }
+        }
+    } else {
+        var mil = n / 1000
+        val unit = n % 1000
+        var x = 1
+        if ((mil % 10 == 2) && (mil % 100 !in 12..14)) {
+            mil = (mil/ 10) * 10
+            x = 0
+        }
+        if ((mil % 10 == 1) && (mil % 100 != 11)) {
+            mil = (mil / 10) * 10
+            x = 2
+        }
+        var r1 = russian(mil)
+        val r2 = russian(unit)
+        if ((mil % 10 == 0) && (x == 1)) r1 += " тысяч "
+        if (mil % 100 == 11) r1 += " тысяч "
+        if ((mil % 10 in 2..4) && (mil% 100 !in 12..14)) r1 += " тысячи "
+        if ((mil % 10 in 5..9) || (mil % 100 in 12..14)) r1 += " тысяч "
+        if (x == 0) r1 += " две тысячи "
+        if (x == 2) r1 += " одна тысяча "
+        result.add(r1 + r2)
+    }
+    return result.joinToString(" ").trim()
+    }
+*/

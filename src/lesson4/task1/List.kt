@@ -114,6 +114,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
 fun abs(v: List<Double>): Double = sqrt(v.fold(0.0) { previousResult, element ->
     sqr(element) + previousResult
 })
+
 /**
  * Простая
  *
@@ -144,7 +145,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double  {
+fun times(a: List<Double>, b: List<Double>): Double {
     var n = 0.0
     for (i in 0 until a.size) {
         n += (a[i] * b[i])
@@ -275,7 +276,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int  {
+fun decimalFromString(str: String, base: Int): Int {
     val a = mutableListOf<Int>()
     for (char in str)
         if (char in 'a'..'z')
@@ -292,14 +293,14 @@ fun decimalFromString(str: String, base: Int): Int  {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String  {
+fun roman(n: Int): String {
     val rimNum = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
     val arabNum = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     var numN = n
     var i = 12
     val result = StringBuilder()
-    while (numN > 0){
-        while (numN >= arabNum[i]){
+    while (numN > 0) {
+        while (numN >= arabNum[i]) {
             numN -= arabNum[i]
             result.append(rimNum[i])
         }
@@ -315,7 +316,7 @@ fun roman(n: Int): String  {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()/*   {
+fun russian(n: Int): String {
     val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот",
             "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val tens = listOf("десять", "одиннадцать", "двенадцать",
@@ -349,7 +350,7 @@ fun russian(n: Int): String = TODO()/*   {
         val unit = n % 1000
         var x = 1
         if ((mil % 10 == 2) && (mil % 100 !in 12..14)) {
-            mil = (mil/ 10) * 10
+            mil = (mil / 10) * 10
             x = 0
         }
         if ((mil % 10 == 1) && (mil % 100 != 11)) {
@@ -360,12 +361,11 @@ fun russian(n: Int): String = TODO()/*   {
         val r2 = russian(unit)
         if ((mil % 10 == 0) && (x == 1)) r1 += " тысяч "
         if (mil % 100 == 11) r1 += " тысяч "
-        if ((mil % 10 in 2..4) && (mil% 100 !in 12..14)) r1 += " тысячи "
+        if ((mil % 10 in 2..4) && (mil % 100 !in 12..14)) r1 += " тысячи "
         if ((mil % 10 in 5..9) || (mil % 100 in 12..14)) r1 += " тысяч "
         if (x == 0) r1 += " две тысячи "
         if (x == 2) r1 += " одна тысяча "
         result.add(r1 + r2)
     }
     return result.joinToString(" ").trim()
-    }
-*/
+}

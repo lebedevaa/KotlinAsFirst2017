@@ -207,9 +207,9 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle>  {
     if (circles.size < 2) throw IllegalArgumentException()
     var answer = Pair(circles[0],circles[1])
     for (i in 0 until circles.size)
-        for (k in i + 1 until circles.size)
-            if (answer.first.distance(answer.second) > circles[i].distance(circles[k]))
-                answer = Pair(circles[i], circles[k])
+        for (l in i + 1 until circles.size)
+            if (answer.first.distance(answer.second) > circles[i].distance(circles[l]))
+                answer = Pair(circles[i], circles[l])
     return answer
 }
 
